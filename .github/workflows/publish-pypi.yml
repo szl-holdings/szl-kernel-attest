@@ -41,7 +41,7 @@ on:
 
 env:
   # name=directory[:github-environment]; separate packages with ';'
-  SZL_PACKAGES: "szl-kernels=.:pypi"
+  SZL_PACKAGES: "szl-kernel-attest=.:szl_kernel_attest"
 
 permissions: {}
 
