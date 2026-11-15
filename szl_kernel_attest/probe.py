@@ -59,9 +59,7 @@ def probe(comm='python3', duration_s=5.0, burn=True):
     burn_proc = None
     if burn:
         try:
-            burn_proc = subprocess.Popen([sys.executable, '-c', 'x=0
-while True: x+=1
-'])
+            burn_proc = subprocess.Popen([sys.executable, '-c', 'while True: pass'])
         except Exception:
             burn_proc = None
     joules = None
