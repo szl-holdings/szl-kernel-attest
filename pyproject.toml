@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "szl-kernel-attest"
+version = "0.1.0"
+description = "Fail-closed ring-0 workload attestation (eBPF scheduler evidence) for the SZL estate"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "Apache-2.0" }
+
+[project.optional-dependencies]
+nvml = ["pynvml"]
+
+[tool.setuptools]
+packages = ["szl_kernel_attest"]
+
+[tool.szl.release]
+import_names = ["szl_kernel_attest"]

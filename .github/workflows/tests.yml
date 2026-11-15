@@ -1,0 +1,22 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -e .
+      - run: python -m unittest discover -s tests -v
+      - name: Fail-closed probe (runner has no BPF - must degrade honestly)
+        run: |
+          python -m szl_kernel_attest --comm python3 --duration 1 --no-burn > receipt.json
+          python -c "import json; r = json.load(open('receipt.json')); assert r['kernel_evidence'] is None, 'fabricated kernel claim on BPF-less runner'; assert r['fail_closed'] is True; print('fail-closed ok:', r['kernel_note'])"
