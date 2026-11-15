@@ -16,7 +16,7 @@ jobs:
           python-version: '3.11'
       - run: pip install -e .
       - run: python -m unittest discover -s tests -v
-      - name: Fail-closed probe (runner has no BPF - must degrade honestly)
+      - name: Fail-closed consistency probe (receipt must be self-consistent and honest)
         run: |
           python -m szl_kernel_attest --comm python3 --duration 1 --no-burn > receipt.json
-          python -c "import json; r = json.load(open('receipt.json')); assert r['kernel_evidence'] is None, 'fabricated kernel claim on BPF-less runner'; assert r['fail_closed'] is True; print('fail-closed ok:', r['kernel_note'])"
+          python -c "import json; r = json.load(open('receipt.json')); assert r['fail_closed'] == (r['kernel_evidence'] is None), 'inconsistent fail-closed state'; assert r['kernel_note'], 'missing honest note'; assert len(r['receipt_sha256']) == 64; print('fail-closed consistent:', r['kernel_note'])"

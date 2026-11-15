@@ -10,6 +10,10 @@ readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "Apache-2.0" }
 
+[project.urls]
+Source = 'https://github.com/szl-holdings/szl-kernel-attest'
+Repository = 'https://github.com/szl-holdings/szl-kernel-attest'
+
 [project.optional-dependencies]
 nvml = ["pynvml"]
 
